@@ -10,6 +10,11 @@ class Univerzitet extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'grad',
+        'godina_osnivanja',
+    ];
+
     public function fakulteti()
     {
         return $this->hasMany(Fakultet::class);
