@@ -4,6 +4,7 @@ use App\Http\Controllers\FakultetController;
 use App\Http\Controllers\UniverzitetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('univerzitet', UniverzitetController::class);
-Route::resource('fakultet', FakultetController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::resource('univerzitet', UniverzitetController::class);
+    Route::resource('fakultet', FakultetController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
